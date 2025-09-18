@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('complaint_files', function (Blueprint $table) {
             $table->id();
             $table->integer('complaint_id');
-            $table->text('complaint_file');
+            $table->text('file');
             $table->timestamps();
         });
     }

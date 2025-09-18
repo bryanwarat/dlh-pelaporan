@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class ComplaintCategory extends Model
 {
-    //
+    protected $fillable = ['category'];
 }

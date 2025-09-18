@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('components.meta')
+    @include('components.admin.meta')
 </head>
 
 <body data-menu-color="light" data-sidebar="default">
@@ -10,10 +10,10 @@
     <div id="app-layout">
 
         {{-- Header --}}
-        @include('components.header')
+        @include('components.admin.header')
 
         {{-- Sidebar --}}
-        @include('components.sidebar')
+        @include('components.admin.sidebar')
 
         {{-- Konten Halaman --}}
         <div class="content-page">
@@ -24,12 +24,12 @@
             </div>
 
             {{-- Footer --}}
-            @include('components.footer')
+            @include('components.admin.footer')
         </div>
     </div>
 
     {{-- Script JS --}}
-    @include('components.scripts')
+    @include('components.admin.scripts')
     @stack('scripts')
 </body>
 
