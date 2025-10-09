@@ -30,7 +30,7 @@
                     <div class="col-xl-12">
                         <div class="breadcrumb-wrap text-center">
                             <div class="breadcrumb-title mb-30">
-                                <h2>Sistem Informasi dan Pelaporan Kerusakan Lingkungan Hidup</h2>
+                                <h2>Sistem Informasi dan Pelaporan Pencemaran Serta Kerusakan Lingkungan Hidup</h2>
                             </div>
 
                         </div>

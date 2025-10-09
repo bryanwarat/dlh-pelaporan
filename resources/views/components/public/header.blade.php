@@ -47,8 +47,7 @@
                                 <ul>
                                     <li><a href="{{ url('/') }}">Home</a></li>
 
-                                    <li><a href="/#layanan">Layanan</a></li>
-                                    <li><a href="#about">Tentang Kami</a></li>
+                                    <li><a href="{{ route('public.complaint') }}">Lapor</a></li>
                                 </ul>
                             </nav>
                         </div>

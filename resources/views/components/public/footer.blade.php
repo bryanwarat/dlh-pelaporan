@@ -38,16 +38,16 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-7">
-                    &copy; {{ date('Y') }} Finco. All rights reserved.
+                    &copy; {{ date('Y') }} Siperkasah. All rights reserved.
                 </div>
-                <div class="col-4">
+                {{-- <div class="col-4">
                     <div class="footer-social">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
+                    </div> --}}
             </div>
         </div>
+    </div>
     </div>
 </footer>

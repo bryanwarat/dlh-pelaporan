@@ -11,7 +11,7 @@
                     <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2">
                         <div class="breadcrumb-wrap text-center">
                             <div class="breadcrumb-title mb-30">
-                                <h2>Pelaporan</h2>
+                                <h2>Form Pelaporan</h2>
                             </div>
                         </div>
                     </div>
@@ -33,11 +33,11 @@
 
 
                                 <div class="card mb-4">
-                                    <div class="card-header bg-success text-white">
+                                    <div class="card-header bg-danger text-white">
                                         <h5 class="card-title mb-0 text-white">1. Detail Pengaduan</h5>
                                     </div>
                                     <div class="card-body row g-3">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <label class="form-label">Kategori Pengaduan <span
                                                     class="text-danger">*</span></label>
                                             <select class="form-select @error('category_id') is-invalid @enderror"
@@ -109,7 +109,7 @@
                                 </div>
 
                                 <div class="card mb-4">
-                                    <div class="card-header bg-success text-white">
+                                    <div class="card-header bg-danger text-white">
                                         <h5 class="card-title mb-0 text-white">2. Data Pelapor</h5>
                                     </div>
                                     <div class="card-body row g-3">
