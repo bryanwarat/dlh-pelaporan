@@ -1,59 +1,92 @@
 @extends('layouts.admin.app')
 
-@section('title', 'Dashboard')
-@section('meta_description', 'Halaman dashboard aplikasi admin')
+@section('title', 'Berita')
+@section('meta_description', 'Halaman daftar berita aplikasi admin')
 @section('meta_author', 'Admin')
 
 @section('content')
     <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
         <div class="flex-grow-1">
-            <h4 class="fs-18 fw-semibold m-0">Dashboard</h4>
+            <h4 class="fs-18 fw-semibold m-0">Berita</h4>
         </div>
+        <a href="{{ route('admin.news.create') }}" class="btn btn-primary btn-sm">Tambah Berita</a>
     </div>
 
-    <!-- Start Main Widgets -->
     <div class="row">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title mb-0">Basic Example</h5>
-            </div><!-- end card header -->
+                <h5 class="card-title mb-0">Daftar Berita</h5>
+            </div>
 
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table mb-0">
+                    <table id="news-table" class="table table-bordered table-striped align-middle w-100">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Phone Number</th>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Status</th>
+                                <th>Created By</th>
+                                <th>View</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Warren Jackson</td>
-                                <td>Jackson</td>
-                                <td>336-508-2157</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Amy</td>
-                                <td>Cunha</td>
-                                <td>646-473-2057</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Steven</td>
-                                <td>Loch</td>
-                                <td>281-308-0793</td>
-                            </tr>
-                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-
-
 @endsection
+
+@push('styles')
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+@endpush
+
+@push('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(function() {
+            $('#news-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.news.data') }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'title',
+                        name: 'title'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status'
+                    },
+                    {
+                        data: 'created_by',
+                        name: 'created_by'
+                    },
+                    {
+                        data: 'view',
+                        name: 'view'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ],
+                order: [
+                    [0, 'desc']
+                ],
+                pageLength: 10
+            });
+        });
+    </script>
+@endpush

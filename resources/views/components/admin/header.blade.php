@@ -7,14 +7,12 @@
                         <i data-feather="menu" class="noti-icon"></i>
                     </button>
                 </li>
-                <li class="d-none d-lg-block">
-                    <h5 class="mb-0">Good Morning, Alex</h5>
-                </li>
+
             </ul>
 
             <ul class="list-unstyled topnav-menu mb-0 d-flex align-items-center">
                 {{-- Search --}}
-                <li class="d-none d-lg-block">
+                {{-- <li class="d-none d-lg-block">
                     <form class="app-search d-none d-md-block me-auto">
                         <div class="position-relative topbar-search">
                             <input type="text" class="form-control ps-4" placeholder="Search..." />
@@ -22,7 +20,7 @@
                                 class="mdi mdi-magnify fs-16 position-absolute text-muted top-50 translate-middle-y ms-2"></i>
                         </div>
                     </form>
-                </li>
+                </li> --}}
 
                 {{-- Fullscreen --}}
                 <li class="d-none d-sm-flex">
@@ -46,8 +44,8 @@
                 <li class="dropdown notification-list topbar-dropdown">
                     <a class="nav-link dropdown-toggle nav-user me-0" data-bs-toggle="dropdown" href="#"
                         role="button">
-                        <img src="{{ asset('assets/images/users/user-13.jpg') }}" alt="user-image"
-                            class="rounded-circle" />
+                        {{-- <img src="{{ asset('assets/images/users/user-13.jpg') }}" alt="user-image"
+                            class="rounded-circle" /> --}}
                         <span class="pro-user-name ms-1">{{ Auth::user()->name }} <i
                                 class="mdi mdi-chevron-down"></i></span>
                     </a>

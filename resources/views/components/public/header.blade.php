@@ -1,65 +1,63 @@
-<header id="masthead" class="site-header header-primary">
-    {{-- Top Header --}}
-    <div class="top-header">
+<header class="header-area">
+    {{-- <div class="header-top second-header d-none d-md-block">
         <div class="container">
-            <div class="row">
-                {{-- Kontak Kiri --}}
-                <div class="col-lg-8 d-none d-lg-block">
-                    <ul class="header-contact-info">
-                        <li><a href="#"><i class="fas fa-phone-alt"></i> +01 (977) 2599 12</a></li>
-                        <li><a href="mailto:info@domain.com"><i class="fas fa-envelope"></i> company@domain.com</a></li>
-                        <li><i class="fas fa-map-marker-alt"></i> 3146 Koontz Lane, California</li>
-                    </ul>
-                </div>
-
-                {{-- Sosmed & Search --}}
-                <div class="col-lg-4 d-flex justify-content-lg-end justify-content-between">
-                    <div class="header-social social-links">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-8 d-none d-md-block">
+                    <div class="header-cta">
                         <ul>
-                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                            <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                            <li><i class="icon dripicons-mail"></i> <span>info@example.com</span></li>
+                            <li><i class="icon far fa-clock"></i> <span>Mon - Sat 8:00 - 18:00</span></li>
                         </ul>
                     </div>
-                    <div class="header-search-icon">
-                        <button class="search-icon"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="col-lg-4 col-md-4 d-none d-lg-block">
+                    <div class="header-social text-right">
+                        <span>
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 d-none d-md-block">
+                    <a href="" class="top-btn">Layanan</a>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+
+    {{-- Menu utama --}}
+    <div id="header-sticky" class="menu-area">
+        <div class="container">
+            <div class="second-menu">
+                <div class="row align-items-center">
+                    <div class="col-xl-2 col-lg-2">
+                        <div class="logo">
+                            <a href="{{ url('/') }}">
+                                <img src="{{ asset('assets/public/img/logo/logo.png') }}" alt="logo">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="responsive">
+                            <i class="icon dripicons-align-right"></i>
+                        </div>
+                        <div class="main-menu text-right text-xl-right">
+                            <nav id="mobile-menu">
+                                <ul>
+                                    <li><a href="{{ url('/') }}">Home</a></li>
+
+                                    <li><a href="/#layanan">Layanan</a></li>
+                                    <li><a href="#about">Tentang Kami</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 text-right">
+                        {{-- optional button --}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    {{-- Bottom Header --}}
-    <div class="bottom-header">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div class="site-identity">
-                <h1 class="site-title">
-                    <a href="{{ url('/') }}">
-                        <img class="white-logo" src="{{ asset('assets/public/images/travele-logo.png') }}"
-                            alt="logo">
-                        <img class="black-logo" src="{{ asset('assets/public/images/travele-logo1.png') }}"
-                            alt="logo">
-                    </a>
-                </h1>
-            </div>
-            {{-- Navigation --}}
-            <div class="main-navigation d-none d-lg-block">
-                <nav id="navigation" class="navigation">
-                    <ul>
-                        <li><a href="{{ url('/') }}">Home</a></li>
-                        <li><a href="#">Tour</a></li>
-                        <li><a href="#">Pages</a></li>
-                        <li><a href="#">Shop</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Dashboard</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="header-btn">
-                <a href="#" class="button-primary">BOOK NOW</a>
-            </div>
-        </div>
-    </div>
-    <div class="mobile-menu-container"></div>
 </header>

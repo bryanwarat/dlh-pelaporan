@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 
-@section('title', 'Dashboard')
-@section('meta_description', 'Halaman dashboard aplikasi admin')
+@section('title', 'Pengaduan')
+@section('meta_description', 'Halaman daftar pengaduan aplikasi admin')
 @section('meta_author', 'Admin')
 
 @section('content')
@@ -9,46 +9,107 @@
         <div class="flex-grow-1">
             <h4 class="fs-18 fw-semibold m-0">Pengaduan</h4>
         </div>
-        <div class="text-end">
-            <a href="{{ route('admin.complaint.category.create') }}" class="btn btn-primary">Tambah</a>
 
-        </div>
     </div>
 
     <!-- Start Main Widgets -->
     <div class="row">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title mb-0">Pengaduan</h5>
+                <h5 class="card-title mb-0">Daftar Pengaduan</h5>
             </div><!-- end card header -->
 
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table mb-0">
+                    <table id="complaints-table" class="table table-bordered table-striped align-middle w-100">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Aduan</th>
-                                <th scope="col">Action</th>
+                                <th>#</th>
+                                <th>Nama</th>
+                                <th>NIK</th>
+                                <th>Telepon</th>
+                                <th>Email</th>
+                                <th>Kategori</th>
+                                <th>Aduan</th>
+                                <th>Lokasi</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach ($complaints as $complaint)
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>{{ $complaint->complaint }}</td>
-                                    <td><a href="{{ route('admin.complaint.detail', $complaint->id) }}"
-                                            class="btn btn-warning">Detail</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-
-                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-
-
 @endsection
+
+@push('styles')
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+@endpush
+
+@push('scripts')
+    <!-- jQuery & DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(function() {
+            $('#complaints-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.complaint.data') }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'nik',
+                        name: 'nik'
+                    },
+                    {
+                        data: 'phone',
+                        name: 'phone'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'category',
+                        name: 'category.category'
+                    },
+                    {
+                        data: 'complaint',
+                        name: 'complaint'
+                    },
+                    {
+                        data: 'location',
+                        name: 'location'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ],
+                order: [
+                    [0, 'desc']
+                ],
+                pageLength: 10
+            });
+        });
+    </script>
+@endpush

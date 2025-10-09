@@ -1,199 +1,265 @@
-<!doctype html>
-<html lang="en">
+@extends('layouts.public.app')
 
-<head>
-    <!-- Meta dan Bootstrap CSS -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Form dengan Peta Leaflet</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('title', 'Form Pengaduan')
 
-    <!-- Leaflet CSS -->
+@section('content')
+    <main>
+        <section class="breadcrumb-area d-flex align-items-center"
+            style="background-image:url('{{ asset('assets/public/img/testimonial/test-bg.jpg') }}')">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2">
+                        <div class="breadcrumb-wrap text-center">
+                            <div class="breadcrumb-title mb-30">
+                                <h2>Pelaporan</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="about-area about-p pt-100 pb-100 p-relative">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="about-content s-about-content">
+
+                            <form method="POST" action="{{ route('public.complaint.store') }}"
+                                enctype="multipart/form-data" class="contact-form">
+                                @csrf
+
+                                <p class="text-muted mb-4"><span class="text-danger">*</span> Wajib diisi</p>
+
+
+
+                                <div class="card mb-4">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="card-title mb-0 text-white">1. Detail Pengaduan</h5>
+                                    </div>
+                                    <div class="card-body row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Kategori Pengaduan <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="form-select @error('category_id') is-invalid @enderror"
+                                                name="category_id">
+                                                <option value="">-- Pilih Kategori --</option>
+                                                @foreach ($categories as $category)
+                                                    <option value="{{ $category->id }}"
+                                                        {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                                        {{ $category->category }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('category_id')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label class="form-label">Lampiran (Foto/PDF)</label>
+                                            <input type="file" class="form-control @error('files') is-invalid @enderror"
+                                                name="files[]" multiple>
+                                            <small class="text-muted">Boleh lebih dari satu file (jpg, png, pdf, max
+                                                2MB)</small>
+                                            @error('files')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="form-label">Link Terkait</label>
+                                            <input type="text"
+                                                class="form-control @error('complaint_link') is-invalid @enderror"
+                                                name="complaint_link" value="{{ old('complaint_link') }}"
+                                                placeholder="(opsional) contoh : link google drive, youtube, facebook, dll">
+                                            @error('complaint_link')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Aduan <span class="text-danger">*</span></label>
+                                            <textarea class="form-control @error('complaint') is-invalid @enderror" name="complaint" rows="5"
+                                                placeholder="Jelaskan detail pengaduan Anda">{{ old('complaint') }}</textarea>
+                                            @error('complaint')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="form-label">Lokasi Aduan <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text"
+                                                class="form-control @error('location') is-invalid @enderror" name="location"
+                                                value="{{ old('location') }}" placeholder="Deskripsi lokasi aduan">
+                                            @error('location')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Pilih Lokasi di Peta</label>
+                                            <div id="map"
+                                                style="height:400px; width:100%; border-radius:8px; overflow:hidden;">
+                                            </div>
+                                            <input type="hidden" id="lat" name="lat"
+                                                value="{{ old('lat', '1.474830') }}">
+                                            <input type="hidden" id="long" name="long"
+                                                value="{{ old('long', '124.842079') }}">
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+
+                                <div class="card mb-4">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="card-title mb-0 text-white">2. Data Pelapor</h5>
+                                    </div>
+                                    <div class="card-body row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Nama Lengkap <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                                name="name" value="{{ old('name') }}" placeholder="Masukkan nama">
+                                            @error('name')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">NIK <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control @error('nik') is-invalid @enderror"
+                                                name="nik" value="{{ old('nik') }}" placeholder="Masukkan NIK">
+                                            @error('nik')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Nomor Telepon <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control @error('phone') is-invalid @enderror"
+                                                name="phone" value="{{ old('phone') }}"
+                                                placeholder="Masukkan nomor telepon">
+                                            @error('phone')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Alamat Email</label>
+                                            <input type="email"
+                                                class="form-control @error('email') is-invalid @enderror" name="email"
+                                                value="{{ old('email') }}" placeholder="Masukkan alamat email">
+                                            @error('email')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Alamat <span class="text-danger">*</span></label>
+                                            <textarea class="form-control @error('address') is-invalid @enderror" name="address" rows="3"
+                                                placeholder="Masukkan alamat lengkap">{{ old('address') }}</textarea>
+                                            @error('address')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-success btn-lg">Kirim Aduan</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+@endsection
+
+@push('scripts')
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <!-- Leaflet Geocoder -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-
-    <style>
-        #map {
-            height: 100vh;
-            /* Fullscreen dalam modal */
-            width: 100%;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container mt-5">
-        <h2 class="mb-4">Form Pengaduan</h2>
-        <form method="POST" action="{{ route('public.complaint.store') }}">
-            @csrf
-
-            <!-- Input Nama -->
-            <div class="mb-3">
-                <label class="form-label">Nama Lengkap</label>
-                <input type="text" class="form-control" name="name" placeholder="Masukkan nama">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">NIK</label>
-                <input type="text" class="form-control" name="nik" placeholder="Masukkan NIK">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Phone</label>
-                <input type="text" class="form-control" name="phone" placeholder="Masukkan nomor telepon">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Alamat</label>
-                <input type="text" class="form-control" name="address" placeholder="Masukkan alamat">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Alamat Email</label>
-                <input type="email" class="form-control" name="email" placeholder="Masukkan email">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Kategori Pengaduan</label>
-                <select class="form-select" name="category_id">
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->category }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Aduan</label>
-                <textarea class="form-control" name="complaint" placeholder="Tuliskan aduan"></textarea>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Link Aduan</label>
-                <input type="text" class="form-control" name="complaint_link" placeholder="Masukkan link aduan">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Lokasi Aduan</label>
-                <input type="text" class="form-control" name="location" placeholder="Deskripsi lokasi">
-            </div>
-
-            <!-- Input Lat Long -->
-            <div class="row mb-3">
-                <div class="col">
-                    <label class="form-label">Latitude</label>
-                    <input type="text" class="form-control" id="lat" name="lat" value="1.474830" readonly>
-                </div>
-                <div class="col">
-                    <label class="form-label">Longitude</label>
-                    <input type="text" class="form-control" id="long" name="long" value="124.842079"
-                        readonly>
-                </div>
-            </div>
-
-            <!-- Tombol untuk buka peta -->
-            <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#mapModal">
-                Pilih Lokasi di Peta
-            </button>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-
-    <!-- Modal Fullscreen untuk peta -->
-    <div class="modal fade" id="mapModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Pilih Lokasi di Peta (Sulawesi Utara)</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <div id="map"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <!-- Leaflet Geocoder -->
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         let map, marker;
-
-        // Koordinat default: Manado (pusat kota)
         const defaultLat = 1.474830;
         const defaultLng = 124.842079;
+        const boundsSulut = L.latLngBounds([0.3000, 123.0000], [5.0000, 126.0000]);
 
-        // Bounding box Sulawesi Utara (kurang lebih)
-        const boundsSulut = L.latLngBounds(
-            [0.3000, 123.0000], // Southwest
-            [5.0000, 126.0000] // Northeast
-        );
+        document.addEventListener("DOMContentLoaded", function() {
+            map = L.map('map').setView([defaultLat, defaultLng], 12);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
 
-        // Saat modal ditampilkan
-        const mapModal = document.getElementById('mapModal');
-        mapModal.addEventListener('shown.bs.modal', function() {
-            if (!map) {
-                // Inisialisasi Map (default ke Manado)
-                map = L.map('map').setView([defaultLat, defaultLng], 9);
+            marker = L.marker([defaultLat, defaultLng]).addTo(map);
 
-                // Tile layer
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap contributors'
-                }).addTo(map);
+            setTimeout(() => {
+                map.invalidateSize();
+            }, 500);
 
-                // Marker default
-                marker = L.marker([defaultLat, defaultLng]).addTo(map);
-
-                // Search bar dengan geocoder
-                L.Control.geocoder({
-                        defaultMarkGeocode: false,
-                        geocoder: L.Control.Geocoder.nominatim({
-                            geocodingQueryParams: {
-                                countrycodes: 'id', // hanya Indonesia
-                            }
-                        })
-                    })
-                    .on('markgeocode', function(e) {
-                        var latlng = e.geocode.center;
-
-                        // Cek apakah hasil masih dalam Sulut
-                        if (boundsSulut.contains(latlng)) {
-                            map.setView(latlng, 14);
-                            marker.setLatLng(latlng);
-
-                            document.getElementById('lat').value = latlng.lat.toFixed(6);
-                            document.getElementById('long').value = latlng.lng.toFixed(6);
-                        } else {
-                            alert("Lokasi harus di dalam Sulawesi Utara!");
+            L.Control.geocoder({
+                    defaultMarkGeocode: false,
+                    geocoder: L.Control.Geocoder.nominatim({
+                        geocodingQueryParams: {
+                            countrycodes: 'id'
                         }
                     })
-                    .addTo(map);
-
-                // Event klik di peta
-                map.on('click', function(e) {
-                    var lat = e.latlng.lat.toFixed(6);
-                    var lng = e.latlng.lng.toFixed(6);
-
-                    // Hanya izinkan jika dalam Sulawesi Utara
-                    if (boundsSulut.contains(e.latlng)) {
-                        marker.setLatLng([lat, lng]);
-                        document.getElementById('lat').value = lat;
-                        document.getElementById('long').value = lng;
+                })
+                .on('markgeocode', function(e) {
+                    var latlng = e.geocode.center;
+                    if (boundsSulut.contains(latlng)) {
+                        map.setView(latlng, 14);
+                        marker.setLatLng(latlng);
+                        document.getElementById('lat').value = latlng.lat.toFixed(6);
+                        document.getElementById('long').value = latlng.lng.toFixed(6);
                     } else {
-                        alert("Lokasi harus di dalam Sulawesi Utara!");
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Lokasi Tidak Valid',
+                            text: 'Lokasi harus di dalam area Sulawesi Utara!'
+                        });
                     }
-                });
-            } else {
-                map.invalidateSize();
-            }
+                })
+                .addTo(map);
+
+            map.on('click', function(e) {
+                var lat = e.latlng.lat.toFixed(6);
+                var lng = e.latlng.lng.toFixed(6);
+                if (boundsSulut.contains(e.latlng)) {
+                    marker.setLatLng([lat, lng]);
+                    document.getElementById('lat').value = lat;
+                    document.getElementById('long').value = lng;
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Lokasi Tidak Valid',
+                        text: 'Lokasi harus di dalam area Sulawesi Utara!'
+                    });
+                }
+            });
         });
     </script>
-</body>
 
-</html>
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: '{{ session('error') }}',
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
+@endpush

@@ -1,60 +1,35 @@
 <!doctype html>
-<html lang="en">
+<html class="no-js" lang="zxx">
 
 <head>
-    {{-- Meta & Title --}}
-    @include('components.public.meta')
-    <title>@yield('title', 'Laravel Template')</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@yield('title', 'Finco - Finance and Consulting')</title>
+    <meta name="description" content="@yield('meta_description', '')">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {{-- CSS --}}
-    <link rel="icon" type="image/png" href="{{ asset('assets/public/images/favicon.png') }}">
-    <link rel="stylesheet" href="{{ asset('assets/public/vendors/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/public/vendors/fontawesome/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/public/vendors/jquery-ui/jquery-ui.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/public/vendors/modal-video/modal-video.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/public/vendors/lightbox/dist/css/lightbox.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/public/vendors/slick/slick.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/public/vendors/slick/slick.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/public/css/style.css') }}">
+    {{-- Favicon --}}
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/public/img/favicon.ico') }}">
+
+    {{-- Styles --}}
+    @include('components.public.styles')
     @stack('styles')
 </head>
 
-<body class="@yield('body-class', 'home')">
+<body>
 
+    {{-- Header --}}
+    @include('components.public.header')
 
+    {{-- Main Content --}}
+    <main>
+        @yield('content')
+    </main>
 
-    <div id="page" class="full-page">
+    {{-- Footer --}}
+    @include('components.public.footer')
 
-        {{-- Header --}}
-        @include('components.public.header')
-
-        {{-- Content --}}
-        <main id="content" class="site-main">
-            @yield('content')
-        </main>
-
-        {{-- Footer --}}
-        @include('components.public.footer')
-    </div>
-
-    {{-- Back To Top --}}
-    <a id="backTotop" href="#" class="to-top-icon">
-        <i class="fas fa-chevron-up"></i>
-    </a>
-
-    {{-- Search Form --}}
-    <div class="header-search-form">
-        <div class="container">
-            <div class="header-search-container">
-                <form class="search-form" role="search" method="get">
-                    <input type="text" name="s" placeholder="Enter your text...">
-                </form>
-                <a href="#" class="search-close"><i class="fas fa-times"></i></a>
-            </div>
-        </div>
-    </div>
-
-    {{-- Script --}}
+    {{-- Scripts --}}
     @include('components.public.scripts')
     @stack('scripts')
 </body>

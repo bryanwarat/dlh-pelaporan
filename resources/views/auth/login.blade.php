@@ -109,34 +109,5 @@
         </div>
     </div>
 
-    {{-- Bagian Kanan (Background + Carousel) --}}
-    <div class="col-xl-7 d-none d-xl-inline-block">
-        <div class="account-page-bg rounded-4">
-            <div class="auth-user-review text-center">
-                {{-- Carousel --}}
-                <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <p class="prelead mb-2 text-white">"With Untitled, your support process can be as enjoyable as
-                                your product."</p>
-                            <h4 class="mb-1 text-white">Camilla Johnson</h4>
-                            <p class="mb-0 text-white">Software Developer</p>
-                        </div>
-                        <div class="carousel-item">
-                            <p class="prelead mb-2 text-white">"Pretty nice theme, hoping you guys could add more features
-                                to this."</p>
-                            <h4 class="mb-1 text-white">Palak Awoo</h4>
-                            <p class="mb-0 text-white">Lead Designer</p>
-                        </div>
-                        <div class="carousel-item">
-                            <p class="prelead mb-2 text-white">"This is a great product, helped us a lot and very quick to
-                                implement."</p>
-                            <h4 class="mb-1 text-white">Laurent Smith</h4>
-                            <p class="mb-0 text-white">Product Designer</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 @endsection
