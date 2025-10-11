@@ -17,13 +17,13 @@
                                     <div class="auth-brand">
                                         <a href="{{ url('/') }}" class="logo logo-light">
                                             <span class="logo-lg">
-                                                <img src="{{ asset('assets/images/logo-light-3.png') }}" alt="logo"
+                                                <img src="{{ asset('assets/public/img/logo/logo.png') }}" alt="logo"
                                                     height="24">
                                             </span>
                                         </a>
                                         <a href="{{ url('/') }}" class="logo logo-dark">
                                             <span class="logo-lg">
-                                                <img src="{{ asset('assets/images/logo-dark-3.png') }}" alt="logo"
+                                                <img src="{{ asset('assets/public/img/logo/logo.png') }}" alt="logo"
                                                     height="24">
                                             </span>
                                         </a>
@@ -31,16 +31,15 @@
                                 </div>
 
                                 <div class="auth-title-section mb-4 text-lg-start text-center">
-                                    <h3 class="text-dark fw-semibold mb-3">Welcome back! Please login</h3>
-                                    <p class="text-muted fs-14 mb-0">Enter your credentials to access your account.</p>
+                                    <h3 class="text-dark fw-semibold mb-3">Login</h3>
                                 </div>
 
                                 {{-- Form Login --}}
                                 <form method="POST" action="{{ route('login') }}" class="my-4">
                                     @csrf
                                     <div class="form-group mb-3">
-                                        <label for="email" class="form-label">Email address</label>
-                                        <input id="email" type="email"
+                                        <label for="email" class="form-label">Email/Username</label>
+                                        <input id="email" type="text"
                                             class="form-control @error('email') is-invalid @enderror" name="email"
                                             value="{{ old('email') }}" required autocomplete="email" autofocus
                                             placeholder="Enter your email">
@@ -75,13 +74,7 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6 text-end">
-                                            @if (Route::has('password.request'))
-                                                <a class="text-muted fs-14" href="{{ route('password.request') }}">
-                                                    Forgot password?
-                                                </a>
-                                            @endif
-                                        </div>
+
                                     </div>
 
                                     <div class="form-group mb-0 row">
@@ -94,11 +87,7 @@
                                 </form>
 
                                 {{-- Register link --}}
-                                <div class="text-center text-muted">
-                                    <p class="mb-0">Don't have an account?
-                                        <a class="text-primary ms-2 fw-medium" href="{{ route('register') }}">Sign up</a>
-                                    </p>
-                                </div>
+
 
                             </div>
                         </div>

@@ -46,8 +46,9 @@
                             <nav id="mobile-menu">
                                 <ul>
                                     <li><a href="{{ url('/') }}">Home</a></li>
+                                    <li><a href="{{ route('public.information.index') }}">Informasi</a></li>
 
-                                    <li><a href="{{ route('public.complaint') }}">Lapor</a></li>
+                                    <li><a href="{{ route('public.complaint') }}">LAPOR!</a></li>
                                 </ul>
                             </nav>
                         </div>

@@ -2,14 +2,16 @@
     <div class="h-100" data-simplebar>
         <div id="sidebar-menu">
             <div class="logo-box">
-                {{-- <a href="{{ url('/') }}" class="logo logo-light">
-                    SI ALPHA
+                <div class="logo-box">
+                    <a href="{{ route('admin.dashboard.index') }}" class="logo logo-light">
+                        <img src="{{ asset('assets/public/img/logo/logo-admin.png') }}" alt="logo">
 
-                </a> --}}
-                {{-- <a href="{{ url('/') }}" class="logo logo-dark">
-                    SI ALPHA
-                </a> --}}
-                <h1>SIPERKASAH</h1>
+                    </a>
+                    <a href="{{ route('admin.dashboard.index') }}" class="logo logo-dark">
+                        <img src="{{ asset('assets/public/img/logo/logo-admin.png') }}" alt="logo">
+                    </a>
+
+                </div>
             </div>
 
             <ul id="side-menu">
@@ -27,7 +29,7 @@
                     <a class="tp-link {{ request()->routeIs('admin.news.*') ? 'active' : '' }}"
                         href="{{ route('admin.news.index') }}">
                         <i data-feather="file"></i>
-                        <span>Berita</span>
+                        <span>Informasi</span>
                     </a>
                 </li>
 
@@ -43,11 +45,21 @@
             <ul id="side-menu">
                 <li class="menu-title">Konfigurasi</li>
 
+
+
                 <li class="{{ request()->routeIs('admin.complaint.category.*') ? 'menuitem-active' : '' }}">
                     <a class="tp-link {{ request()->routeIs('admin.complaint.category.*') ? 'active' : '' }}"
                         href="{{ route('admin.complaint.category.index') }}">
                         <i data-feather="file"></i>
                         <span>Kategori Pengaduan</span>
+                    </a>
+                </li>
+
+                <li class="{{ request()->routeIs('admin.users.*') ? 'menuitem-active' : '' }}">
+                    <a class="tp-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}"
+                        href="{{ route('admin.users.index') }}">
+                        <i data-feather="users"></i>
+                        <span>User</span>
                     </a>
                 </li>
 

@@ -5,7 +5,7 @@
 @section('content')
     <main>
         <section class="breadcrumb-area d-flex align-items-center"
-            style="background-image:url('{{ asset('assets/public/img/testimonial/test-bg.jpg') }}')">
+            style="background-image:url('{{ asset('assets/public/img/call/title-bg.jpg') }}')">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2">

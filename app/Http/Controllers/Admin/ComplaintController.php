@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Complaint;
 use App\Models\ComplaintFile;
 use App\Models\ComplaintCategory;
+use App\Models\StatusHistory;
+use App\Models\User; // Import model User
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class ComplaintController extends Controller
 {
@@ -63,8 +67,58 @@ class ComplaintController extends Controller
             ->firstOrFail();
 
         $files = ComplaintFile::where('complaint_id', $id)->get();
+        
+        // Ambil data riwayat dan gabungkan dengan nama user
+        $histories = StatusHistory::where('complaint_id', $id)
+            ->leftJoin('users as u', 'status_histories.status_by', '=', 'u.id')
+            ->select('status_histories.*', 'u.name as user_name')
+            ->orderBy('status_histories.created_at', 'desc')
+            ->get();
+            
+        return view('pages.admin.complaint.detail', compact('complaint', 'files', 'histories'));
+    }
 
-        return view('pages.admin.complaint.detail', compact('complaint', 'files'));
+    public function updateStatus(Request $request, $id)
+    {
+        // Pastikan validasi berjalan dengan baik dan mengembalikan JSON jika gagal
+        $validated = $request->validate([
+            'status' => 'required',
+            'note' => 'nullable|string',
+        ]);
+    
+        DB::beginTransaction();
+        try {
+            $complaint = Complaint::findOrFail($id);
+            $complaint->status = $request->status;
+            $complaint->save();
+    
+            $user = auth()->user();
+
+            StatusHistory::create([
+                'complaint_id' => $id,
+                'status' => $request->status,
+                'note' => $request->note,
+                'status_by' => $user->id,
+            ]);
+    
+            DB::commit();
+    
+            // KEMBALIKAN RESPONS JSON UNTUK SUKSES
+            return response()->json([
+                'success' => true,
+                'message' => 'Status pengaduan berhasil diperbarui!'
+            ]);
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            \Log::error('Complaint Status Update Failed: ' . $e->getMessage());
+            
+            // KEMBALIKAN RESPONS JSON UNTUK ERROR
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal memperbarui status: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     // ======================
@@ -85,8 +139,8 @@ class ComplaintController extends Controller
                 ->addColumn('action', function ($row) {
                     $btn  = '<a href="'.route('admin.complaint.category.edit', $row->id).'" class="btn btn-sm btn-warning">Edit</a> ';
                     $btn .= '<form action="'.route('admin.complaint.category.destroy', $row->id).'" method="POST" style="display:inline-block;">'
-                          . csrf_field() . method_field('DELETE')
-                          . '<button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Yakin hapus?\')">Hapus</button></form>';
+                              . csrf_field() . method_field('DELETE')
+                              . '<button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Yakin hapus?\')">Hapus</button></form>';
                     return $btn;
                 })
                 ->rawColumns(['action'])

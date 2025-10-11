@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\UserController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -16,6 +17,9 @@ Route::get('/', [App\Http\Controllers\Public\HomeController::class, 'index'])->n
 
 Route::get('/lapor', [App\Http\Controllers\Public\ComplaintController::class, 'index'])->name('public.complaint');
 Route::post('/lapor/store', [App\Http\Controllers\Public\ComplaintController::class, 'store'])->name('public.complaint.store');
+Route::get('/informasi', [App\Http\Controllers\Public\HomeController::class, 'infomationIndex'])->name('public.information.index');
+Route::get('/informasi/{slug}', [App\Http\Controllers\Public\HomeController::class, 'informationDetail'])->name('public.information.detail');
+
 
 
 //Admin
@@ -26,18 +30,20 @@ Route::middleware(['auth'])->group(function () {
     
 
     Route::get('/admin/news', [NewsController::class, 'index'])->name('admin.news.index');
-Route::get('/admin/news/data', [NewsController::class, 'getData'])->name('admin.news.data');
-Route::get('/admin/news/create', [NewsController::class, 'create'])->name('admin.news.create');
-Route::post('/admin/news/store', [NewsController::class, 'store'])->name('admin.news.store');
-Route::get('/admin/news/{id}/edit', [NewsController::class, 'edit'])->name('admin.news.edit');
-Route::put('/admin/news/{id}', [NewsController::class, 'update'])->name('admin.news.update');
-Route::get('/admin/news/{id}', [NewsController::class, 'show'])->name('admin.news.show');
-Route::delete('/admin/news/{id}', [NewsController::class, 'destroy'])->name('admin.news.destroy');
+    Route::get('/admin/news/data', [NewsController::class, 'getData'])->name('admin.news.data');
+    Route::get('/admin/news/create', [NewsController::class, 'create'])->name('admin.news.create');
+    Route::post('/admin/news/store', [NewsController::class, 'store'])->name('admin.news.store');
+    Route::get('/admin/news/{id}/edit', [NewsController::class, 'edit'])->name('admin.news.edit');
+    Route::put('/admin/news/{id}', [NewsController::class, 'update'])->name('admin.news.update');
+    Route::get('/admin/news/{id}', [NewsController::class, 'detail'])->name('admin.news.detail');
+    Route::delete('/admin/news/{id}', [NewsController::class, 'destroy'])->name('admin.news.destroy');
 
     
     Route::get('/admin/aduan', [App\Http\Controllers\Admin\ComplaintController::class, 'index'])->name('admin.complaint.index');
     Route::get('/admin/aduan/detail/{id}', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintDetail'])->name('admin.complaint.detail');
     Route::get('/admin/aduan/data', [App\Http\Controllers\Admin\ComplaintController::class, 'getData'])->name('admin.complaint.data');
+
+    Route::put('/admin/aduan/update-status/{id}', [App\Http\Controllers\Admin\ComplaintController::class, 'updateStatus'])->name('admin.complaint.update_status');
 
 
     // COMPLAINT CATEGORY
@@ -50,6 +56,16 @@ Route::delete('/admin/news/{id}', [NewsController::class, 'destroy'])->name('adm
     Route::delete('/admin/aduan/kategori/{id}', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintCategoryDestroy'])->name('admin.complaint.category.destroy');
 
 
+    // Manajemen Pengguna (User)
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::get('/admin/users/data', [UserController::class, 'usersData'])->name('admin.users.data');
+    Route::get('/admin/users/create', [UserController::class, 'create'])->name('admin.users.create');
+    Route::post('/admin/users/store', [UserController::class, 'store'])->name('admin.users.store');
+    Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/admin/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/admin/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 });
+
+
 
 

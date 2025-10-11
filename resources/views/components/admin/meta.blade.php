@@ -4,6 +4,7 @@
 <meta name="description" content="@yield('meta_description', 'A fully featured admin theme')" />
 <meta name="author" content="@yield('meta_author', 'Zoyothemes')" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <!-- App favicon -->
 <link rel="shortcut icon" href="{{ asset('assets/admin/images/favicon.ico') }}">

@@ -44,8 +44,16 @@
 
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+    <script
+        src="https://www.google.com/search?q=https://cdn.jsdelivr.net/npm/bootstrap%405.3.0/dist/js/bootstrap.bundle.min.js">
+    </script>
 
     <script>
         $(function() {
@@ -72,8 +80,10 @@
                         name: 'created_by'
                     },
                     {
-                        data: 'view',
-                        name: 'view'
+                        data: 'view', // Nama kolom baru untuk tombol View
+                        name: 'view',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'action',

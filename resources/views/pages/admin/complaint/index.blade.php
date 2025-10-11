@@ -20,26 +20,25 @@
             </div><!-- end card header -->
 
             <div class="card-body">
-                <div class="table-responsive">
-                    <table id="complaints-table" class="table table-bordered table-striped align-middle w-100">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nama</th>
-                                <th>NIK</th>
-                                <th>Telepon</th>
-                                <th>Email</th>
-                                <th>Kategori</th>
-                                <th>Aduan</th>
-                                <th>Lokasi</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+                <table id="complaints-table" class="table table-bordered table-striped align-middle w-100">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nama</th>
+                            <th>NIK</th>
+                            <th>Telepon</th>
+                            <th>Email</th>
+                            <th>Kategori</th>
+                            <th>Aduan</th>
+                            <th>Lokasi</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
+    </div>
     </div>
 @endsection
 
@@ -49,10 +48,17 @@
 @endpush
 
 @push('scripts')
-    <!-- jQuery & DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+    <script
+        src="https://www.google.com/search?q=https://cdn.jsdelivr.net/npm/bootstrap%405.3.0/dist/js/bootstrap.bundle.min.js">
+    </script>
 
     <script>
         $(function() {
