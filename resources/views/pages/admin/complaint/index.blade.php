@@ -9,56 +9,47 @@
         <div class="flex-grow-1">
             <h4 class="fs-18 fw-semibold m-0">Pengaduan</h4>
         </div>
-
     </div>
 
-    <!-- Start Main Widgets -->
     <div class="row">
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title mb-0">Daftar Pengaduan</h5>
-            </div><!-- end card header -->
-
+            </div>
             <div class="card-body">
-                <table id="complaints-table" class="table table-bordered table-striped align-middle w-100">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama</th>
-                            <th>NIK</th>
-                            <th>Telepon</th>
-                            <th>Email</th>
-                            <th>Kategori</th>
-                            <th>Aduan</th>
-                            <th>Lokasi</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                </table>
+                <div class="table-responsive">
+                    <table id="complaints-table" class="table table-bordered table-striped align-middle w-100">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tanggal</th>
+                                <th>Nama</th>
+                                <th>NIK</th>
+                                <th>Telepon</th>
+                                <th>Email</th>
+                                <th>Kategori</th>
+                                <th>Aduan</th>
+                                <th>Lokasi</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 
 @push('styles')
-    <!-- DataTables CSS -->
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 @endpush
 
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
-
-    <script
-        src="https://www.google.com/search?q=https://cdn.jsdelivr.net/npm/bootstrap%405.3.0/dist/js/bootstrap.bundle.min.js">
-    </script>
 
     <script>
         $(function() {
@@ -71,6 +62,10 @@
                         name: 'DT_RowIndex',
                         orderable: false,
                         searchable: false
+                    },
+                    {
+                        data: 'created_at', // Pemetaan kolom baru
+                        name: 'created_at'
                     },
                     {
                         data: 'name',
@@ -104,6 +99,7 @@
                         data: 'status',
                         name: 'status'
                     },
+
                     {
                         data: 'action',
                         name: 'action',

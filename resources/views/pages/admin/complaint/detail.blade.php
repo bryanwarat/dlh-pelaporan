@@ -22,33 +22,45 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
+                        <label class="form-label fw-bold">Tanggal Pengaduan</label>
+
+                        <p>{{ \carbon\Carbon::parse($complaint->created_at)->translatedFormat('d F, Y') }}</p>
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label fw-bold">Kategori</label>
                         <p>{{ $complaint->category }}</p>
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label fw-bold">Nama Pelapor</label>
                         <p>{{ $complaint->name }}</p>
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label fw-bold">NIK</label>
                         <p>{{ $complaint->nik }}</p>
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label fw-bold">Telepon</label>
                         <p>{{ $complaint->phone }}</p>
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label fw-bold">Email</label>
                         <p>{{ $complaint->email }}</p>
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label fw-bold">Alamat</label>
                         <p>{{ $complaint->address }}</p>
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label fw-bold">Isi Aduan</label>
                         <p>{{ $complaint->complaint }}</p>
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label fw-bold">Link Terkait</label>
                         @if ($complaint->complaint_link)
@@ -71,7 +83,7 @@
                     <div>
                         Status Saat Ini:
                         @if ($complaint->status == 1)
-                            <span class="badge bg-success fs-14">Sedang Diproses</span>
+                            <span class="badge bg-info fs-14">Sedang Diproses</span>
                         @elseif ($complaint->status == 2)
                             <span class="badge bg-success fs-14">Selesai</span>
                         @elseif ($complaint->status == 3)

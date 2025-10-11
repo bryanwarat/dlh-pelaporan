@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Complaint;
-use App\Models\ComplaintFile;
-use App\Models\ComplaintCategory;
-use App\Models\StatusHistory;
-use App\Models\User; // Import model User
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\DB;
 use Exception;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Complaint;
+use Illuminate\Http\Request;
+use App\Models\ComplaintFile;
+use App\Models\StatusHistory;
+use App\Models\ComplaintCategory;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
 
 class ComplaintController extends Controller
 {
@@ -36,17 +39,28 @@ class ComplaintController extends Controller
                     'complaints.complaint',
                     'complaints.location',
                     'complaints.status',
-                    'complaint_categories.category'
+                    'complaint_categories.category',
+                    'complaints.created_at'
                 )
                 ->leftJoin('complaint_categories', 'complaints.category_id', '=', 'complaint_categories.id')
                 ->orderBy('complaints.id', 'desc');
 
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->editColumn('created_at', function ($row) {
+                    // Memformat tanggal dengan Carbon
+                    return Carbon::parse($row->created_at)->translatedFormat('d F Y');
+                })
                 ->editColumn('status', function ($row) {
-                    return $row->status == 0
-                        ? '<span class="badge bg-warning">Belum Diproses</span>'
-                        : '<span class="badge bg-success">Selesai</span>';
+                    if ($row->status == 1) {
+                        return '<span class="badge bg-info">Sedang Diproses</span>';
+                    } elseif ($row->status == 2) {
+                        return '<span class="badge bg-success">Selesai</span>';
+                    } elseif ($row->status == 3) {
+                        return '<span class="badge bg-danger">Ditolak</span>';
+                    } else {
+                        return '<span class="badge bg-warning">Belum Diproses</span>';
+                    }
                 })
                 ->addColumn('action', function ($row) {
                     return '<a href="'.route('admin.complaint.detail', $row->id).'" class="btn btn-sm btn-primary">Detail</a>';
@@ -68,7 +82,6 @@ class ComplaintController extends Controller
 
         $files = ComplaintFile::where('complaint_id', $id)->get();
         
-        // Ambil data riwayat dan gabungkan dengan nama user
         $histories = StatusHistory::where('complaint_id', $id)
             ->leftJoin('users as u', 'status_histories.status_by', '=', 'u.id')
             ->select('status_histories.*', 'u.name as user_name')
@@ -80,9 +93,8 @@ class ComplaintController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        // Pastikan validasi berjalan dengan baik dan mengembalikan JSON jika gagal
-        $validated = $request->validate([
-            'status' => 'required',
+        $request->validate([
+            'status' => 'required|in:0,1,2,3',
             'note' => 'nullable|string',
         ]);
     
@@ -92,28 +104,25 @@ class ComplaintController extends Controller
             $complaint->status = $request->status;
             $complaint->save();
     
-            $user = auth()->user();
+            $user = Auth::user();
 
             StatusHistory::create([
                 'complaint_id' => $id,
                 'status' => $request->status,
                 'note' => $request->note,
-                'status_by' => $user->id,
+                'status_by' => $user->id, // Menyimpan ID user yang login
             ]);
     
             DB::commit();
     
-            // KEMBALIKAN RESPONS JSON UNTUK SUKSES
             return response()->json([
                 'success' => true,
                 'message' => 'Status pengaduan berhasil diperbarui!'
             ]);
-
         } catch (Exception $e) {
             DB::rollBack();
             \Log::error('Complaint Status Update Failed: ' . $e->getMessage());
             
-            // KEMBALIKAN RESPONS JSON UNTUK ERROR
             return response()->json([
                 'success' => false,
                 'message' => 'Gagal memperbarui status: ' . $e->getMessage()

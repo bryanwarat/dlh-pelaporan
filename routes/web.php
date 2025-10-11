@@ -8,7 +8,12 @@ use App\Http\Controllers\Admin\UserController;
 //     return view('welcome');
 // });
 
-Auth::routes();
+Auth::routes([
+    'login' => true,
+    'register' => false,
+    'reset' => true,
+    'verify' => true,
+]);
 
 
 //Public

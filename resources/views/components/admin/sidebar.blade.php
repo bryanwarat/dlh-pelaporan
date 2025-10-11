@@ -33,7 +33,7 @@
                     </a>
                 </li>
 
-                <li class="{{ request()->routeIs('admin.complaint.index') ? 'menuitem-active' : '' }}">
+                <li class="{{ request()->routeIs('admin.complaint.*') ? 'menuitem-active' : '' }}">
                     <a class="tp-link {{ request()->routeIs('admin.complaint.*') ? 'active' : '' }}"
                         href="{{ route('admin.complaint.index') }}">
                         <i data-feather="file-text"></i>

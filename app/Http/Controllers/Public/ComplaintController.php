@@ -64,6 +64,6 @@ class ComplaintController extends Controller
 
         return redirect()
             ->route('public.complaint')
-            ->with('success', 'Pengaduan berhasil dikirim!');
+            ->with('success', 'Pengaduan berhasil dikirim! Pihak kami akan mengirimkan update selanjutnya melaui data kontak yang anda kirimkan. Terima kasih.');
     }
 }

@@ -19,7 +19,7 @@
                 </div>
             </div>
         </section>
-        <section class="inner-blog b-details-p pt-100 pb-80">
+        <section class="inner-blog b-details-p pt-100 pb-150">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8">
