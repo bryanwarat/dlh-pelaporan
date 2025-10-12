@@ -1,13 +1,13 @@
 @extends('layouts.admin.app')
 
-@section('title', 'Berita')
+@section('title', 'Informasi')
 @section('meta_description', 'Halaman daftar berita aplikasi admin')
 @section('meta_author', 'Admin')
 
 @section('content')
     <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
         <div class="flex-grow-1">
-            <h4 class="fs-18 fw-semibold m-0">Berita</h4>
+            <h4 class="fs-18 fw-semibold m-0">Informasi</h4>
         </div>
         <a href="{{ route('admin.news.create') }}" class="btn btn-primary btn-sm">Tambah Berita</a>
     </div>
@@ -15,7 +15,7 @@
     <div class="row">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title mb-0">Daftar Berita</h5>
+                <h5 class="card-title mb-0">Daftar Informasi</h5>
             </div>
 
             <div class="card-body">

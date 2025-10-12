@@ -44,21 +44,21 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/news/{id}', [NewsController::class, 'destroy'])->name('admin.news.destroy');
 
     
-    Route::get('/admin/aduan', [App\Http\Controllers\Admin\ComplaintController::class, 'index'])->name('admin.complaint.index');
-    Route::get('/admin/aduan/detail/{id}', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintDetail'])->name('admin.complaint.detail');
-    Route::get('/admin/aduan/data', [App\Http\Controllers\Admin\ComplaintController::class, 'getData'])->name('admin.complaint.data');
+    Route::get('/admin/pelaporan', [App\Http\Controllers\Admin\ComplaintController::class, 'index'])->name('admin.complaint.index');
+    Route::get('/admin/pelaporan/detail/{id}', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintDetail'])->name('admin.complaint.detail');
+    Route::get('/admin/pelaporan/data', [App\Http\Controllers\Admin\ComplaintController::class, 'getData'])->name('admin.complaint.data');
 
     Route::put('/admin/aduan/update-status/{id}', [App\Http\Controllers\Admin\ComplaintController::class, 'updateStatus'])->name('admin.complaint.update_status');
 
 
     // COMPLAINT CATEGORY
-    Route::get('/admin/aduan/kategori', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintCategory'])->name('admin.complaint.category.index');
-    Route::get('/admin/aduan/kategori/data', [App\Http\Controllers\Admin\ComplaintController::class, 'getCategoryData'])->name('admin.complaint.category.data');
-    Route::get('/admin/aduan/kategori/tambah', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintCategoryCreate'])->name('admin.complaint.category.create');
-    Route::post('/admin/aduan/kategori/store', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintCategoryStore'])->name('admin.complaint.category.store');
-    Route::get('/admin/aduan/kategori/{id}/edit', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintCategoryEdit'])->name('admin.complaint.category.edit');
-    Route::put('/admin/aduan/kategori/{id}', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintCategoryUpdate'])->name('admin.complaint.category.update');
-    Route::delete('/admin/aduan/kategori/{id}', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintCategoryDestroy'])->name('admin.complaint.category.destroy');
+    Route::get('/admin/pelaporan/kategori', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintCategory'])->name('admin.complaint.category.index');
+    Route::get('/admin/pelaporan/kategori/data', [App\Http\Controllers\Admin\ComplaintController::class, 'getCategoryData'])->name('admin.complaint.category.data');
+    Route::get('/admin/pelaporan/kategori/tambah', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintCategoryCreate'])->name('admin.complaint.category.create');
+    Route::post('/admin/pelaporan/kategori/store', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintCategoryStore'])->name('admin.complaint.category.store');
+    Route::get('/admin/pelaporan/kategori/{id}/edit', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintCategoryEdit'])->name('admin.complaint.category.edit');
+    Route::put('/admin/pelaporan/kategori/{id}', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintCategoryUpdate'])->name('admin.complaint.category.update');
+    Route::delete('/admin/pelaporan/kategori/{id}', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintCategoryDestroy'])->name('admin.complaint.category.destroy');
 
 
     // Manajemen Pengguna (User)

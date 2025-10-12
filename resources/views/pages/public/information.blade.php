@@ -1,6 +1,6 @@
 @extends('layouts.public.app')
 
-@section('title', 'Informasi')
+@section('title', 'Informasi - SiPerkasah')
 
 @section('content')
     <main>

@@ -1,6 +1,6 @@
 @extends('layouts.admin.auth')
 
-@section('title', 'Login - Hando')
+@section('title', 'Login')
 
 @section('content')
     {{-- Bagian Kiri (Form Login) --}}

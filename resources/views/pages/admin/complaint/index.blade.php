@@ -1,20 +1,20 @@
 @extends('layouts.admin.app')
 
-@section('title', 'Pengaduan')
+@section('title', 'Pelaporan')
 @section('meta_description', 'Halaman daftar pengaduan aplikasi admin')
 @section('meta_author', 'Admin')
 
 @section('content')
     <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
         <div class="flex-grow-1">
-            <h4 class="fs-18 fw-semibold m-0">Pengaduan</h4>
+            <h4 class="fs-18 fw-semibold m-0">Pelaporan</h4>
         </div>
     </div>
 
     <div class="row">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title mb-0">Daftar Pengaduan</h5>
+                <h5 class="card-title mb-0">Daftar Laporan</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">

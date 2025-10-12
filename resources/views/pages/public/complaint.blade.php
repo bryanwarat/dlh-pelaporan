@@ -1,6 +1,6 @@
 @extends('layouts.public.app')
 
-@section('title', 'Form Pengaduan')
+@section('title', 'Pelaporan - SiPerkasah')
 
 @section('content')
     <main>
@@ -28,31 +28,18 @@
                                 enctype="multipart/form-data" class="contact-form">
                                 @csrf
 
-                                <p class="text-muted mb-4">Tanda <span class="text-danger">*</span> Wajib diisi</p>
+                                <p class="text-muted mb-4">Catatan : Tanda <span class="text-danger">*</span> Wajib diisi
+                                </p>
 
-                                @if (session('success'))
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        {{ session('success') }}
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                            aria-label="Close"></button>
-                                    </div>
-                                @endif
 
-                                @if (session('error'))
-                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        {{ session('error') }}
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                            aria-label="Close"></button>
-                                    </div>
-                                @endif
 
                                 <div class="card mb-4">
                                     <div class="card-header bg-danger text-white">
-                                        <h5 class="card-title mb-0 text-white">1. Detail Pengaduan</h5>
+                                        <h5 class="card-title mb-0 text-white">1. Detail Laporan</h5>
                                     </div>
                                     <div class="card-body row g-3">
                                         <div class="col-md-12">
-                                            <label class="form-label">Kategori Pengaduan <span
+                                            <label class="form-label">Kategori Laporan <span
                                                     class="text-danger">*</span></label>
                                             <select class="form-select @error('category_id') is-invalid @enderror"
                                                 name="category_id">
@@ -116,6 +103,9 @@
                                             <input type="hidden" id="long" name="long"
                                                 value="{{ old('long', '124.842079') }}">
                                         </div>
+
+
+
                                     </div>
                                 </div>
 
@@ -144,9 +134,9 @@
                                         <div class="col-md-6">
                                             <label class="form-label">Nomor Telepon <span
                                                     class="text-danger">*</span></label>
-                                            <input type="text"
-                                                class="form-control @error('phone') is-invalid @enderror" name="phone"
-                                                value="{{ old('phone') }}" placeholder="Masukkan nomor telepon">
+                                            <input type="text" class="form-control @error('phone') is-invalid @enderror"
+                                                name="phone" value="{{ old('phone') }}"
+                                                placeholder="Masukkan nomor telepon">
                                             @error('phone')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror

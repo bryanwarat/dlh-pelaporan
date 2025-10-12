@@ -1,6 +1,7 @@
 @extends('layouts.public.app')
 
-@section('title', 'Homepage')
+@section('title', 'SiPerkasah')
+@section('meta_description', 'SiPerkasah - Sistem Informasi dan Pelaporan Pencemaran Serta Kerusakan Lingkungan Hidup')
 
 @section('content')
     <main>

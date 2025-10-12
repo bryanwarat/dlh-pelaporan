@@ -37,7 +37,7 @@
                     <a class="tp-link {{ request()->routeIs('admin.complaint.*') ? 'active' : '' }}"
                         href="{{ route('admin.complaint.index') }}">
                         <i data-feather="file-text"></i>
-                        <span>Pengaduan</span>
+                        <span>Pelaporan</span>
                     </a>
                 </li>
             </ul>
@@ -51,7 +51,7 @@
                     <a class="tp-link {{ request()->routeIs('admin.complaint.category.*') ? 'active' : '' }}"
                         href="{{ route('admin.complaint.category.index') }}">
                         <i data-feather="file"></i>
-                        <span>Kategori Pengaduan</span>
+                        <span>Kategori Pelaporan</span>
                     </a>
                 </li>
 

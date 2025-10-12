@@ -1,6 +1,6 @@
 @extends('layouts.public.app')
 
-@section('title', $information->title)
+@section('title', $information->title - SiPerkasah)
 
 @section('content')
     <main>
