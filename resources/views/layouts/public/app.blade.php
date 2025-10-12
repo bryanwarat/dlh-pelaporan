@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>@yield('title', 'SiPerkasah')</title>
-    <meta name="description" content="@yield('meta_description', '')">
+    <meta name="description" content="@yield('meta_description', 'SiPerkasah - Sistem Informasi dan Pelaporan Pencemaran Serta Kerusakan Lingkungan Hidup')">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {{-- Favicon --}}
