@@ -1,6 +1,9 @@
 @extends('layouts.public.app')
 
 @section('title', 'Informasi - SiPerkasah')
+@section('meta_description',
+    'Informasi SiPerkasah- Sistem Informasi dan Pelaporan Pencemaran Serta Kerusakan Lingkungan
+    Hidup')
 
 @section('content')
     <main>
@@ -45,8 +48,8 @@
                                         <p>{{ Str::limit(strip_tags($information->content), 200) }}</p>
                                         <div class="slider-btn">
                                             <a href="{{ route('public.information.detail', $information->slug) }}"
-                                                class="btn ss-btn" data-animation="fadeInRight" data-delay=".8s">Read
-                                                More</a>
+                                                class="btn ss-btn" data-animation="fadeInRight"
+                                                data-delay=".8s">Selengkapnya</a>
                                             <div class="btn-after" data-animation="fadeInRight" data-delay=".8s"></div>
                                         </div>
                                     </div>

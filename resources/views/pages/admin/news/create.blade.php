@@ -1,10 +1,10 @@
 @extends('layouts.admin.app')
 
-@section('title', 'Tambah Berita')
+@section('title', 'Tambah Informasi')
 
 @section('content')
     <div class="py-3">
-        <h4 class="fs-18 fw-semibold mb-3">Tambah Berita</h4>
+        <h4 class="fs-18 fw-semibold mb-3">Tambah Informasi</h4>
 
         <form action="{{ route('admin.news.store') }}" method="POST" enctype="multipart/form-data">
             @csrf

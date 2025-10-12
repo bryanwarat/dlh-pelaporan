@@ -42,7 +42,7 @@
                             <div class="about-title second-atitle">
                                 <h2>Dinas Lingkungan Hidup Kota Manado</h2>
                             </div>
-                            <p>Dinas Lingkungan Hidup Kota Manado siap menerima laporan terkait pencemaran dankerusakan
+                            <p>Dinas Lingkungan Hidup Kota Manado siap menerima laporan terkait pencemaran dan kerusakan
                                 lingkungan dan
                                 memastikan tindak lanjut yang cepat dan tepat.</p>
                             <p>Dinas Lingkungan Hidup Kota Manado berkomitmen untuk menjaga kebersihan dan kelestarian
@@ -96,7 +96,7 @@
                                         <img src="{{ Storage::url($information->thumbnail) }}"
                                             alt="{{ $information->title }}">
                                     </a>
-                                    <div class="b-meta">
+                                    <div class="b-meta bg-danger">
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12">
                                                 <i class="far fa-calendar-alt"></i>
@@ -112,8 +112,8 @@
                                     </h4>
                                     <p>{{ Str::limit(strip_tags($information->content), 100) }}</p>
                                     <div class="blog-btn"><a
-                                            href="{{ route('public.information.detail', $information->slug) }}">Read
-                                            More<i class="fas fa-chevron-right"></i></a>
+                                            href="{{ route('public.information.detail', $information->slug) }}">Selengkapnya<i
+                                                class="fas fa-chevron-right"></i></a>
                                     </div>
                                 </div>
                             </div>

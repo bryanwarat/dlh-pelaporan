@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class NewsController extends Controller
@@ -74,6 +75,7 @@ class NewsController extends Controller
         ]);
 
         try {
+            $data['view'] = 1;
             $data['slug'] = $data['slug'] ?? Str::slug($data['title']);
             $data['created_by'] = Auth::id();
 

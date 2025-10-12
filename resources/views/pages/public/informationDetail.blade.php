@@ -1,6 +1,7 @@
 @extends('layouts.public.app')
 
-@section('title', $information->title - SiPerkasah)
+@section('title', $information->title . ' - SiPerkasah')
+@section('meta_description', $information->title . ' - SiPerkasah')
 
 @section('content')
     <main>
@@ -63,19 +64,19 @@
                         <aside>
                             <div class="widget mb-40">
                                 <div class="widget-title text-center">
-                                    <h4>Feeds</h4>
+                                    <h4>Terbaru</h4>
                                 </div>
-                                {{-- <div class="widget__post">
+                                <div class="widget__post">
                                     <ul>
                                         @forelse ($latestNews as $item)
                                             <li>
                                                 <div class="widget__post-thumb">
-                                                    <img src="{{ Storage::url($item->thumbnail) }}"
+                                                    <img src="{{ Storage::url($item->thumbnail) }}" style="max-width: 100px"
                                                         alt="{{ $item->title }}">
                                                 </div>
                                                 <div class="widget__post-content">
                                                     <h6><a
-                                                            href="{{ route('public.information.detail', $item->id) }}">{{ Str::limit($item->title, 35) }}</a>
+                                                            href="{{ route('public.information.detail', $item->slug) }}">{{ Str::limit($item->title, 35) }}</a>
                                                     </h6>
                                                     <span><i
                                                             class="far fa-clock"></i>{{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</span>
@@ -85,7 +86,7 @@
                                             <li>Tidak ada berita terbaru.</li>
                                         @endforelse
                                     </ul>
-                                </div> --}}
+                                </div>
                             </div>
                         </aside>
                     </div>

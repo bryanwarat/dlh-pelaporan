@@ -27,8 +27,10 @@ class HomeController extends Controller
     public function informationDetail($slug)
     {
         $information = News::where('slug', $slug)->firstOrFail();
+        $latestNews = News::orderBy('created_at', 'desc')->where('status', '1')->get();
+        
 
-        return view('pages.public.informationDetail', compact('information'));
+        return view('pages.public.informationDetail', compact('information', 'latestNews'));
     }
 
 }

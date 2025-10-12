@@ -38,14 +38,14 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-xl-10 col-lg-10">
                         <div class="responsive">
                             <i class="icon dripicons-align-right"></i>
                         </div>
                         <div class="main-menu text-right text-xl-right">
                             <nav id="mobile-menu">
                                 <ul>
-                                    <li><a href="{{ url('/') }}">Home</a></li>
+                                    <li><a href="{{ url('/') }}">Beranda</a></li>
                                     <li><a href="{{ route('public.information.index') }}">Informasi</a></li>
 
                                     <li><a href="{{ route('public.complaint') }}">LAPOR!</a></li>
@@ -53,9 +53,7 @@
                             </nav>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-4 text-right">
-                        {{-- optional button --}}
-                    </div>
+
                 </div>
             </div>
         </div>
