@@ -31,7 +31,21 @@
                                 <p class="text-muted mb-4">Catatan : Tanda <span class="text-danger">*</span> Wajib diisi
                                 </p>
 
+                                @if (session('success'))
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {{ session('success') }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                    </div>
+                                @endif
 
+                                @if (session('error'))
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        {{ session('error') }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                    </div>
+                                @endif
 
                                 <div class="card mb-4">
                                     <div class="card-header bg-danger text-white">
@@ -42,7 +56,7 @@
                                             <label class="form-label">Kategori Laporan <span
                                                     class="text-danger">*</span></label>
                                             <select class="form-select @error('category_id') is-invalid @enderror"
-                                                name="category_id">
+                                                name="category_id" id="category_id" required>
                                                 <option value="">-- Pilih Kategori --</option>
                                                 @foreach ($categories as $category)
                                                     <option value="{{ $category->id }}"
@@ -103,9 +117,6 @@
                                             <input type="hidden" id="long" name="long"
                                                 value="{{ old('long', '124.842079') }}">
                                         </div>
-
-
-
                                     </div>
                                 </div>
 
@@ -114,50 +125,90 @@
                                         <h5 class="card-title mb-0 text-white">2. Data Pelapor</h5>
                                     </div>
                                     <div class="card-body row g-3">
-                                        <div class="col-md-6">
-                                            <label class="form-label">Nama Lengkap <span
-                                                    class="text-danger">*</span></label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                                name="name" value="{{ old('name') }}" placeholder="Masukkan nama">
-                                            @error('name')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">NIK <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control @error('nik') is-invalid @enderror"
-                                                name="nik" value="{{ old('nik') }}" placeholder="Masukkan NIK">
-                                            @error('nik')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">Nomor Telepon <span
-                                                    class="text-danger">*</span></label>
-                                            <input type="text" class="form-control @error('phone') is-invalid @enderror"
-                                                name="phone" value="{{ old('phone') }}"
-                                                placeholder="Masukkan nomor telepon">
-                                            @error('phone')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">Alamat Email <span
-                                                    class="text-danger">*</span></label>
-                                            <input type="email"
-                                                class="form-control @error('email') is-invalid @enderror" name="email"
-                                                value="{{ old('email') }}" placeholder="Masukkan alamat email">
-                                            @error('email')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
                                         <div class="col-12">
-                                            <label class="form-label">Alamat <span class="text-danger">*</span></label>
-                                            <textarea class="form-control @error('address') is-invalid @enderror" name="address" rows="3"
-                                                placeholder="Masukkan alamat lengkap">{{ old('address') }}</textarea>
-                                            @error('address')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
+
+                                            <div class="alert alert-info" role="alert">
+                                                <div class="d-flex align-items-start mb-2">
+                                                    <i class="fas fa-check-circle me-2 mt-1"></i>
+                                                    <span>Harap berikan data yang benar, karena kami akan menghubungi Anda
+                                                        terkait perkembangan laporan berdasarkan data kontak yang
+                                                        diberikan.
+                                                    </span>
+                                                </div>
+                                                <div class="d-flex align-items-start mb-2">
+                                                    <i class="fas fa-check-circle me-2 mt-1"></i>
+                                                    <span>Kami memastikan data yang Anda kirimkan aman dan
+                                                        dirahasiakan.</span>
+                                                </div>
+                                                <div class="d-flex align-items-start">
+                                                    <i class="fas fa-check-circle me-2 mt-1"></i>
+                                                    <span>Jika anda mencentang "Laporkan secara anonim", maka data yang
+                                                        diminta hanya nomor telepon.</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="anonim-checkbox"
+                                                    name="is_anonim" value="1"
+                                                    {{ old('is_anonim') ? 'checked' : '' }}>
+                                                <label class="form-check-label fw-bold" for="anonim-checkbox">
+                                                    Laporkan secara anonim
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div id="pelapor-fields" class="row g-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label" for="name">Nama Lengkap <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text"
+                                                    class="form-control @error('name') is-invalid @enderror"
+                                                    name="name" id="name" value="{{ old('name') }}"
+                                                    placeholder="Masukkan nama" required>
+                                                @error('name')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label" for="nik">NIK <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text"
+                                                    class="form-control @error('nik') is-invalid @enderror" name="nik"
+                                                    id="nik" value="{{ old('nik') }}"
+                                                    placeholder="Masukkan NIK" required>
+                                                @error('nik')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label" for="phone">Nomor Telepon (Whatsapp) <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text"
+                                                    class="form-control @error('phone') is-invalid @enderror"
+                                                    name="phone" id="phone" value="{{ old('phone') }}"
+                                                    placeholder="Masukkan nomor telepon" required>
+                                                @error('phone')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label" for="email">Alamat Email <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="email"
+                                                    class="form-control @error('email') is-invalid @enderror"
+                                                    name="email" id="email" value="{{ old('email') }}"
+                                                    placeholder="Masukkan alamat email" required>
+                                                @error('email')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label" for="address">Alamat <span
+                                                        class="text-danger">*</span></label>
+                                                <textarea class="form-control @error('address') is-invalid @enderror" name="address" id="address" rows="3"
+                                                    placeholder="Masukkan alamat lengkap" required>{{ old('address') }}</textarea>
+                                                @error('address')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -238,30 +289,75 @@
                     });
                 }
             });
+
+            // LOGIKA ANOMIM
+            const anonimCheckbox = document.getElementById('anonim-checkbox');
+            const nameInput = document.getElementById('name');
+            const nikInput = document.getElementById('nik');
+            const phoneInput = document.getElementById('phone');
+            const emailInput = document.getElementById('email');
+            const addressTextarea = document.getElementById('address');
+
+            // Simpan nilai awal atribut 'required'
+            const initialRequired = {
+                name: nameInput.hasAttribute('required'),
+                nik: nikInput.hasAttribute('required'),
+                phone: phoneInput.hasAttribute('required'),
+                email: emailInput.hasAttribute('required'),
+                address: addressTextarea.hasAttribute('required')
+            };
+
+            anonimCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    // Simpan nilai input saat ini sebelum diubah
+                    nameInput.dataset.originalValue = nameInput.value;
+                    nikInput.dataset.originalValue = nikInput.value;
+                    emailInput.dataset.originalValue = emailInput.value;
+                    addressTextarea.dataset.originalValue = addressTextarea.value;
+                    phoneInput.dataset.originalValue = phoneInput.value; // Simpan nilai phone juga
+
+                    // Ubah nilai dan set readonly
+                    nameInput.value = 'Anonim';
+                    nikInput.value = '-';
+                    emailInput.value = '-';
+                    addressTextarea.value = '-';
+
+                    nameInput.readOnly = true;
+                    nikInput.readOnly = true;
+                    emailInput.readOnly = true;
+                    addressTextarea.readOnly = true;
+
+                    // Hapus required, kecuali untuk phone
+                    nameInput.removeAttribute('required');
+                    nikInput.removeAttribute('required');
+                    emailInput.removeAttribute('required');
+                    addressTextarea.removeAttribute('required');
+
+                } else {
+                    // Kembalikan nilai dan hapus readonly
+                    nameInput.readOnly = false;
+                    nikInput.readOnly = false;
+                    emailInput.readOnly = false;
+                    addressTextarea.readOnly = false;
+
+                    nameInput.value = nameInput.dataset.originalValue || '';
+                    nikInput.value = nikInput.dataset.originalValue || '';
+                    emailInput.value = emailInput.dataset.originalValue || '';
+                    addressTextarea.value = addressTextarea.dataset.originalValue || '';
+                    phoneInput.value = phoneInput.dataset.originalValue || '';
+
+                    // Kembalikan atribut required ke field yang seharusnya
+                    if (initialRequired.name) nameInput.setAttribute('required', '');
+                    if (initialRequired.nik) nikInput.setAttribute('required', '');
+                    if (initialRequired.email) emailInput.setAttribute('required', '');
+                    if (initialRequired.address) addressTextarea.setAttribute('required', '');
+                }
+            });
+
+            // Tangani kondisi saat halaman direfresh dengan old input yang anonim
+            if (anonimCheckbox.checked) {
+                anonimCheckbox.dispatchEvent(new Event('change'));
+            }
         });
     </script>
-
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: '{{ session('success') }}',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'OK'
-            });
-        </script>
-    @endif
-
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Gagal!',
-                text: '{{ session('error') }}',
-                confirmButtonColor: '#d33',
-                confirmButtonText: 'OK'
-            });
-        </script>
-    @endif
 @endpush

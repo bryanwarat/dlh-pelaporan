@@ -21,11 +21,11 @@ class ComplaintController extends Controller
     {
         $request->validate([
             'category_id'    => 'required',
-            'name'           => 'required|string',
-            'nik'            => 'required|string',
+            'name'           => 'string',
+            'nik'            => 'string',
             'phone'          => 'required|string',
-            'address'        => 'required|string',
-            'email'          => 'required|email',
+            'address'        => 'string',
+            'email'          => 'string',
             'complaint'      => 'required|string',
             'complaint_link' => 'nullable|string',
             'location'       => 'nullable|string',

@@ -43,7 +43,23 @@
 
                     <div class="mb-3">
                         <label class="form-label fw-bold">Telepon</label>
-                        <p>{{ $complaint->phone }}</p>
+                        <p>
+                            {{ $complaint->phone }}
+                            {{-- Tombol WhatsApp --}}
+                            @if ($complaint->phone)
+                                @php
+                                    // Hilangkan karakter non-digit dan tambahkan kode negara
+                                    $whatsappNumber = preg_replace('/[^0-9]/', '', $complaint->phone);
+                                    if (substr($whatsappNumber, 0, 1) === '0') {
+                                        $whatsappNumber = '62' . substr($whatsappNumber, 1);
+                                    }
+                                    $whatsappLink = 'https://wa.me/' . $whatsappNumber;
+                                @endphp
+                                <a href="{{ $whatsappLink }}" target="_blank" class="btn btn-sm btn-success ms-2">
+                                    <i class="fab fa-whatsapp"></i> Hubungi via WhatsApp
+                                </a>
+                            @endif
+                        </p>
                     </div>
 
                     <div class="mb-3">
@@ -194,7 +210,8 @@
                         <label for="status" class="form-label">Pilih Status Baru</label>
                         <select class="form-select" id="status" name="status" required>
                             <option value="0" {{ $complaint->status == 0 ? 'selected' : '' }}>Belum Diproses</option>
-                            <option value="1" {{ $complaint->status == 1 ? 'selected' : '' }}>Sedang Diproses</option>
+                            <option value="1" {{ $complaint->status == 1 ? 'selected' : '' }}>Sedang Diproses
+                            </option>
                             <option value="2" {{ $complaint->status == 2 ? 'selected' : '' }}>Selesai</option>
                             <option value="3" {{ $complaint->status == 3 ? 'selected' : '' }}>Ditolak</option>
                         </select>
