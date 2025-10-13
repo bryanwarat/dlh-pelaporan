@@ -9,7 +9,7 @@
         <div class="flex-grow-1">
             <h4 class="fs-18 fw-semibold m-0">Informasi</h4>
         </div>
-        <a href="{{ route('admin.news.create') }}" class="btn btn-primary btn-sm">Tambah Berita</a>
+        <a href="{{ route('admin.news.create') }}" class="btn btn-primary btn-sm">Tambah Informasi</a>
     </div>
 
     <div class="row">

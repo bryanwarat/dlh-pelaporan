@@ -7,11 +7,11 @@
 @section('content')
     <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
         <div class="flex-grow-1">
-            <h4 class="fs-18 fw-semibold m-0">Manajemen Pengguna</h4>
+            <h4 class="fs-18 fw-semibold m-0">User</h4>
         </div>
         <div class="ms-auto mt-2 mt-sm-0">
             <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
-                <i class="mdi mdi-plus"></i> Tambah Pengguna
+                <i class="mdi mdi-plus"></i> Tambah User
             </a>
         </div>
     </div>
@@ -25,7 +25,7 @@
                         <th>Nama</th>
                         <th>Email</th>
                         <th>Level</th>
-                        <th>Bergabung</th>
+                        <th>Dibuat</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
