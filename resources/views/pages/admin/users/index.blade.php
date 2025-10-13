@@ -21,7 +21,6 @@
             <table id="users-table" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Nama</th>
                         <th>Email</th>
                         <th>Level</th>
@@ -57,10 +56,6 @@
                 serverSide: true,
                 ajax: "{{ route('admin.users.data') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
                         data: 'name',
                         name: 'name'
                     },
