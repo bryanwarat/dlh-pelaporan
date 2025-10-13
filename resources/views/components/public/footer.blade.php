@@ -37,7 +37,7 @@
     <div class="copyright-wrap">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-7">
+                <div class="col-12">
                     &copy; {{ date('Y') }} SiPerkasah. All rights reserved.
                 </div>
                 {{-- <div class="col-4">
