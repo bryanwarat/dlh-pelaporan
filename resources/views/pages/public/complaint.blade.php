@@ -80,11 +80,11 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-12">
-                                            <label class="form-label text-black">Link Terkait</label>
+                                            <label class="form-label text-black">Link Terkait (opsional)</label>
                                             <input type="text"
                                                 class="form-control @error('complaint_link') is-invalid @enderror"
                                                 name="complaint_link" value="{{ old('complaint_link') }}"
-                                                placeholder="(opsional) contoh : link google drive, youtube, facebook, dll">
+                                                placeholder="contoh : link facebook, instagram dll">
                                             @error('complaint_link')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
