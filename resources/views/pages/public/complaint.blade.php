@@ -84,7 +84,7 @@
                                             <input type="text"
                                                 class="form-control @error('complaint_link') is-invalid @enderror"
                                                 name="complaint_link" value="{{ old('complaint_link') }}"
-                                                placeholder="contoh : link facebook, instagram dll">
+                                                placeholder="link facebook, instagram dll">
                                             @error('complaint_link')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
