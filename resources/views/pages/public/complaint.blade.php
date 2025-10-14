@@ -53,7 +53,7 @@
                                     </div>
                                     <div class="card-body row g-3">
                                         <div class="col-md-12">
-                                            <label class="form-label">Kategori Laporan <span
+                                            <label class="form-label text-black">Kategori Laporan <span
                                                     class="text-danger">*</span></label>
                                             <select class="form-select @error('category_id') is-invalid @enderror"
                                                 name="category_id" id="category_id" required>
@@ -70,7 +70,7 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <label class="form-label">Lampiran (Foto/PDF)</label>
+                                            <label class="form-label text-black">Bukti (Foto/PDF)</label>
                                             <input type="file" class="form-control @error('files') is-invalid @enderror"
                                                 name="files[]" multiple>
                                             <small class="text-muted">Boleh lebih dari satu file (jpg, png, pdf, max
@@ -80,7 +80,7 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-12">
-                                            <label class="form-label">Link Terkait</label>
+                                            <label class="form-label text-black">Link Terkait</label>
                                             <input type="text"
                                                 class="form-control @error('complaint_link') is-invalid @enderror"
                                                 name="complaint_link" value="{{ old('complaint_link') }}"
@@ -90,15 +90,16 @@
                                             @enderror
                                         </div>
                                         <div class="col-12">
-                                            <label class="form-label">Aduan <span class="text-danger">*</span></label>
+                                            <label class="form-label text-black">Laporan <span
+                                                    class="text-danger">*</span></label>
                                             <textarea class="form-control @error('complaint') is-invalid @enderror" name="complaint" rows="5"
-                                                placeholder="Jelaskan detail pengaduan Anda">{{ old('complaint') }}</textarea>
+                                                placeholder="Jelaskan detail laporan Anda">{{ old('complaint') }}</textarea>
                                             @error('complaint')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div class="col-md-12">
-                                            <label class="form-label">Lokasi Aduan <span
+                                            <label class="form-label text-black">Lokasi Kejadian <span
                                                     class="text-danger">*</span></label>
                                             <input type="text"
                                                 class="form-control @error('location') is-invalid @enderror" name="location"
@@ -108,7 +109,7 @@
                                             @enderror
                                         </div>
                                         <div class="col-12">
-                                            <label class="form-label">Pilih Lokasi di Peta</label>
+                                            <label class="form-label text-black">Pilih Lokasi di Peta</label>
                                             <div id="map"
                                                 style="height:400px; width:100%; border-radius:8px; overflow:hidden;">
                                             </div>
@@ -214,7 +215,7 @@
                                 </div>
 
                                 <div class="text-center mt-4">
-                                    <button type="submit" class="btn btn-success btn-lg">Kirim Aduan</button>
+                                    <button type="submit" class="btn btn-success btn-lg">Kirim Laporan</button>
                                 </div>
                             </form>
                         </div>
@@ -360,4 +361,28 @@
             }
         });
     </script>
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: '{{ session('error') }}',
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
 @endpush

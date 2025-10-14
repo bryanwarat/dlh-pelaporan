@@ -56,9 +56,9 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12 pl-70">
+                    <div class="col-lg-6 col-md-12 col-sm-12 pl-50 pr-30">
                         <div class="s-about-img p-relative">
-                            <img src="{{ asset('assets/public/img/features/about_img.png') }}" alt="img">
+                            <img src="{{ asset('assets/public/img/features/about_img.jpg') }}" alt="img">
                         </div>
                     </div>
                 </div>
