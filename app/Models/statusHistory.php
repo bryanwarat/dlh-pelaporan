@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class statusHistory extends Model
+class StatusHistory extends Model
 {
     protected $fillable = [
         'complaint_id',
