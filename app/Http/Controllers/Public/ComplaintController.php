@@ -40,7 +40,7 @@ class ComplaintController extends Controller
             'lat'              => 'nullable',
             'long'             => 'nullable',
             'files.*'          => 'nullable|file|mimes:jpg,jpeg,png,pdf',
-            'is_anonim'        => 'nullable|boolean' // Tambahan asumsi dari view sebelumnya
+            'is_anonim'        => 'nullable|boolean'
         ]);
 
         

@@ -185,7 +185,7 @@
                                                 <input type="text"
                                                     class="form-control @error('phone') is-invalid @enderror"
                                                     name="phone" id="phone" value="{{ old('phone') }}"
-                                                    placeholder="Masukkan nomor telepon" required>
+                                                    placeholder="08xxxxx" required>
                                                 @error('phone')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
