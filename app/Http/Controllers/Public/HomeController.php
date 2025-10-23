@@ -16,7 +16,7 @@ class HomeController extends Controller
         return view('pages.public.home', compact('informations'));
     }
 
-    public function infomationIndex()
+    public function informationIndex()
     {
         // Ambil 3 berita terbaru dari tabel 'news'
         $informations = News::orderBy('created_at', 'desc')->where('status', '1')->get();

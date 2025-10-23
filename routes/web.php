@@ -22,8 +22,10 @@ Route::get('/', [App\Http\Controllers\Public\HomeController::class, 'index'])->n
 
 Route::get('/lapor', [App\Http\Controllers\Public\ComplaintController::class, 'index'])->name('public.complaint');
 Route::post('/lapor/store', [App\Http\Controllers\Public\ComplaintController::class, 'store'])->name('public.complaint.store');
-Route::get('/informasi', [App\Http\Controllers\Public\HomeController::class, 'infomationIndex'])->name('public.information.index');
+Route::get('/informasi', [App\Http\Controllers\Public\HomeController::class, 'informationIndex'])->name('public.information.index');
 Route::get('/informasi/{slug}', [App\Http\Controllers\Public\HomeController::class, 'informationDetail'])->name('public.information.detail');
+Route::get('/pelaporan', [App\Http\Controllers\Public\ComplaintController::class, 'statusIndex'])->name('public.complaint.status.index');
+Route::get('/pelaporan/{id}', [App\Http\Controllers\Public\ComplaintController::class, 'statusShow'])->name('public.complaint.status.show');
 
 
 
