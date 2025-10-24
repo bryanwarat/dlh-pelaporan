@@ -47,7 +47,7 @@
                                 <ul>
                                     <li><a href="{{ url('/') }}">Beranda</a></li>
                                     <li><a href="{{ route('public.information.index') }}">Informasi</a></li>
-
+                                    <li><a href="{{ route('public.complaint.status.index') }}">Laporan Masuk</a></li>
                                     <li><a href="{{ route('public.complaint') }}">LAPOR!</a></li>
                                 </ul>
                             </nav>

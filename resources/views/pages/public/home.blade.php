@@ -72,7 +72,11 @@
                         <h2><span class="text-white"> Laporkan Masalah Lingkungan di Kota Manado</span></h2>
                         <p>Jika Anda menemukan permasalahan lingkungan, silakan laporkan agar segera ditindaklanjuti oleh
                             Dinas Lingkungan Hidup Kota Manado.</p>
-                        <a href="{{ route('public.complaint') }}" class="btn ss-btn mt-3">Laporkan Sekarang</a>
+                        <a href="{{ route('public.complaint') }}" class="btn ss-btn mt-3">Laporkan Sekarang</a><br><br>
+                        <b class="text-white mb-0 pb-0"><a class="text-white"
+                                href="{{ route('public.complaint.status.index') }}" class="mt-3">Lihat
+                                Laporan
+                                Masuk</a></b>
                     </div>
                 </div>
             </div>

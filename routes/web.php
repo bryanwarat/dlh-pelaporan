@@ -24,7 +24,7 @@ Route::get('/lapor', [App\Http\Controllers\Public\ComplaintController::class, 'i
 Route::post('/lapor/store', [App\Http\Controllers\Public\ComplaintController::class, 'store'])->name('public.complaint.store');
 Route::get('/informasi', [App\Http\Controllers\Public\HomeController::class, 'informationIndex'])->name('public.information.index');
 Route::get('/informasi/{slug}', [App\Http\Controllers\Public\HomeController::class, 'informationDetail'])->name('public.information.detail');
-Route::get('/pelaporan', [App\Http\Controllers\Public\ComplaintController::class, 'statusIndex'])->name('public.complaint.status.index');
+Route::get('/laporan-masuk', [App\Http\Controllers\Public\ComplaintController::class, 'statusIndex'])->name('public.complaint.status.index');
 Route::get('/pelaporan/{id}', [App\Http\Controllers\Public\ComplaintController::class, 'statusShow'])->name('public.complaint.status.show');
 
 
@@ -49,9 +49,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/pelaporan', [App\Http\Controllers\Admin\ComplaintController::class, 'index'])->name('admin.complaint.index');
     Route::get('/admin/pelaporan/detail/{id}', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintDetail'])->name('admin.complaint.detail');
     Route::get('/admin/pelaporan/data', [App\Http\Controllers\Admin\ComplaintController::class, 'getData'])->name('admin.complaint.data');
-
+    Route::put('/admin/pelaporan/history/{id}', [App\Http\Controllers\Admin\ComplaintController::class, 'updateHistoryNote'])->name('admin.complaint.history.update');
     Route::put('/admin/aduan/update-status/{id}', [App\Http\Controllers\Admin\ComplaintController::class, 'updateStatus'])->name('admin.complaint.update_status');
-
 
     // COMPLAINT CATEGORY
     Route::get('/admin/pelaporan/kategori', [App\Http\Controllers\Admin\ComplaintController::class, 'complaintCategory'])->name('admin.complaint.category.index');

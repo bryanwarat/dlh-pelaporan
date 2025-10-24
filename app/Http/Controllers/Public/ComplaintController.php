@@ -91,7 +91,7 @@ class ComplaintController extends Controller
     public function statusIndex()
     {
         // Mengambil semua pelaporan dengan pagination sederhana
-        $complaints = Complaint::orderBy('created_at', 'desc')->paginate(10);
+        $complaints = Complaint::join('complaint_categories', 'complaints.category_id', '=', 'complaint_categories.id')->orderBy('complaints.created_at', 'desc')->paginate(10);
         
         return view('pages.public.complaint-list', compact('complaints'));
     }

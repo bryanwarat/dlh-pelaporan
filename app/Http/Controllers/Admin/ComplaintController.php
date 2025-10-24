@@ -31,39 +31,58 @@ class ComplaintController extends Controller
     {
         if ($request->ajax()) {
             $data = Complaint::select(
-                    'complaints.id',
-                    'complaints.name',
-                    'complaints.nik',
-                    'complaints.phone',
-                    'complaints.email',
-                    'complaints.complaint',
-                    'complaints.location',
-                    'complaints.status',
-                    'complaint_categories.category',
-                    'complaints.created_at'
-                )
-                ->leftJoin('complaint_categories', 'complaints.category_id', '=', 'complaint_categories.id')
-                ->orderBy('complaints.id', 'desc');
+                'complaints.id',
+                'complaints.name',
+                'complaints.nik',
+                'complaints.phone',
+                'complaints.email',
+                'complaints.complaint',
+                'complaints.location',
+                'complaints.status',
+                'complaint_categories.category',
+                'complaints.created_at'
+            )
+            ->leftJoin('complaint_categories', 'complaints.category_id', '=', 'complaint_categories.id');
+            // ->orderBy('complaints.id', 'desc'); // Akan diatur oleh DataTables
+
+            // ======================================
+            // LOGIKA FILTER TAMBAHAN
+            // ======================================
+            
+            // 1. Filter Status
+            if ($request->filled('status')) {
+                $data->where('complaints.status', $request->status);
+            }
+
+            // 2. Filter Rentang Tanggal
+            if ($request->filled('start_date') && $request->filled('end_date')) {
+                $startDate = Carbon::parse($request->start_date)->startOfDay();
+                $endDate = Carbon::parse($request->end_date)->endOfDay();
+                
+                $data->whereBetween('complaints.created_at', [$startDate, $endDate]);
+            }
+            // ======================================
+            // END LOGIKA FILTER TAMBAHAN
 
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('created_at', function ($row) {
-                    // Memformat tanggal dengan Carbon
                     return Carbon::parse($row->created_at)->translatedFormat('d F Y');
                 })
                 ->editColumn('status', function ($row) {
-                    if ($row->status == 1) {
-                        return '<span class="badge bg-info">Sedang Diproses</span>';
-                    } elseif ($row->status == 2) {
-                        return '<span class="badge bg-success">Selesai</span>';
-                    } elseif ($row->status == 3) {
-                        return '<span class="badge bg-danger">Ditolak</span>';
-                    } else {
-                        return '<span class="badge bg-warning">Belum Diproses</span>';
-                    }
+                    // Penentuan tampilan badge status yang lebih rapi
+                    return match ((string) $row->status) {
+                        '1' => '<span class="badge bg-info">Sedang Diproses</span>',
+                        '2' => '<span class="badge bg-success">Selesai</span>',
+                        '3' => '<span class="badge bg-danger">Ditolak</span>',
+                        default => '<span class="badge bg-warning">Belum Diproses</span>',
+                    };
+                })
+                ->editColumn('complaint', function ($row) {
+                    return \Illuminate\Support\Str::limit($row->complaint, 50, '...');
                 })
                 ->addColumn('action', function ($row) {
-                    return '<a href="'.route('admin.complaint.detail', $row->id).'" class="btn btn-sm btn-primary">Detail</a>';
+                    return '<a href="'.route('admin.complaint.detail', $row->id).'" class="btn btn-sm btn-primary"><i class="fas fa-eye me-1"></i> Detail</a>';
                 })
                 ->rawColumns(['status', 'action'])
                 ->make(true);
@@ -154,6 +173,38 @@ class ComplaintController extends Controller
                 })
                 ->rawColumns(['action'])
                 ->make(true);
+        }
+    }
+
+    public function updateHistoryNote(Request $request, $id)
+    {
+        $request->validate([
+            'note' => 'nullable|string',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            // Find the specific status history record
+            $history = StatusHistory::findOrFail($id);
+            
+            // Simpan catatan baru
+            $history->note = $request->note;
+            $history->save();
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Catatan riwayat status berhasil diperbarui.'
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            \Log::error('Status History Note Update Failed: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal memperbarui catatan: ' . $e->getMessage()
+            ], 500);
         }
     }
 

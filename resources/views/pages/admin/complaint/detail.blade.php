@@ -1,13 +1,13 @@
 @extends('layouts.admin.app')
 
-@section('title', 'Detail Pengaduan')
-@section('meta_description', 'Halaman detail pengaduan')
+@section('title', 'Detail Laporan')
+@section('meta_description', 'Halaman detail Laporan')
 @section('meta_author', 'Admin')
 
 @section('content')
     <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
         <div class="flex-grow-1">
-            <h4 class="fs-18 fw-semibold m-0">Detail Pengaduan</h4>
+            <h4 class="fs-18 fw-semibold m-0">Detail Laporan</h4>
         </div>
         <div class="text-end">
             <a href="{{ route('admin.complaint.index') }}" class="btn btn-secondary">Kembali</a>
@@ -136,9 +136,23 @@
                     @if ($files->count() > 0)
                         <ul class="list-group">
                             @foreach ($files as $file)
+                                @php
+                                    $fileUrl = asset('storage/' . $file->complaint_file);
+                                    $fileName = basename($file->complaint_file);
+                                    $extension = pathinfo($fileName, PATHINFO_EXTENSION);
+                                    $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png']);
+                                @endphp
                                 <li class="list-group-item">
-                                    <a href="{{ asset('storage/' . $file->complaint_file) }}" target="_blank">
-                                        {{ basename($file->complaint_file) }}
+                                    <a href="{{ $fileUrl }}" target="_blank"
+                                        class="text-decoration-none d-flex align-items-center">
+                                        @if ($isImage)
+                                            <img src="{{ $fileUrl }}" alt="{{ $fileName }}"
+                                                style="max-width: 100px; max-height: 100px; margin-right: 15px; border-radius: 4px; object-fit: cover; border: 1px solid #ddd;">
+                                            <span>{{ $fileName }} (Gambar)</span>
+                                        @else
+                                            <i class="fas fa-file-alt me-2 text-primary fs-4"></i>
+                                            <span>{{ $fileName }}</span>
+                                        @endif
                                     </a>
                                 </li>
                             @endforeach
@@ -162,6 +176,7 @@
                                     <th>Status Baru</th>
                                     <th>Catatan</th>
                                     <th>Diubah Oleh</th>
+                                    <th>Aksi</th> {{-- Kolom baru untuk tombol edit --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -179,12 +194,21 @@
                                                 <span class="badge bg-warning">Belum Diproses</span>
                                             @endif
                                         </td>
-                                        <td>{{ $history->note ?? '-' }}</td>
+                                        {{-- Tambahkan ID untuk memudahkan update catatan --}}
+                                        <td id="note-{{ $history->id }}">{{ $history->note ?? '-' }}</td>
                                         <td>{{ $history->user_name ?? 'Admin' }}</td>
+                                        <td>
+                                            {{-- Tombol untuk membuka modal edit catatan --}}
+                                            <button type="button" class="btn btn-sm btn-warning edit-note-btn"
+                                                data-bs-toggle="modal" data-bs-target="#editNoteModal"
+                                                data-id="{{ $history->id }}" data-note="{{ $history->note ?? '' }}">
+                                                Edit Catatan
+                                            </button>
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4">Tidak ada riwayat perubahan status.</td>
+                                        <td colspan="5">Tidak ada riwayat perubahan status.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -195,6 +219,7 @@
         </div>
     </div>
 
+    {{-- Modal untuk Update Status Utama --}}
     <div class="modal fade" id="updateStatusModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <form id="updateStatusForm" action="{{ route('admin.complaint.update_status', $complaint->id) }}"
@@ -228,6 +253,33 @@
             </form>
         </div>
     </div>
+
+    {{-- MODAL BARU UNTUK EDIT CATATAN RIWAYAT --}}
+    <div class="modal fade" id="editNoteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="editNoteForm" method="POST" class="modal-content">
+                @csrf
+                @method('PUT') {{-- Method spoofing untuk PUT request --}}
+                {{-- Kita tidak perlu input hidden history_id di sini, 
+                     karena action URL akan diatur secara dinamis oleh JS --}}
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Catatan Riwayat Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="edit_note" class="form-label">Catatan</label>
+                        {{-- ID 'edit_note' akan digunakan oleh JavaScript --}}
+                        <textarea class="form-control" id="edit_note" name="note" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
@@ -251,6 +303,7 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        // LOGIKA UPDATE STATUS UTAMA
         document.getElementById('updateStatusForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -262,7 +315,7 @@
             formData.append('_method', 'PUT');
 
             fetch(actionUrl, {
-                    method: 'POST',
+                    method: 'POST', // Menggunakan POST karena _method=PUT di body
                     body: formData,
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
@@ -271,8 +324,9 @@
                 })
                 .then(response => {
                     if (!response.ok) {
-                        return response.text().then(text => {
-                            throw new Error(text)
+                        return response.json().then(errorData => {
+                            // Mengambil pesan error dari JSON response jika ada
+                            throw new Error(errorData.message || 'Gagal terhubung ke server.');
                         });
                     }
                     return response.json();
@@ -301,7 +355,92 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Error!',
-                        text: 'Koneksi ke server gagal. Mohon coba lagi.',
+                        text: 'Koneksi ke server gagal atau terjadi kesalahan pada server: ' + error
+                            .message,
+                    });
+                });
+        });
+
+        // =========================================================================================
+        // LOGIKA EDIT CATATAN RIWAYAT STATUS (HISTORY NOTE)
+        // =========================================================================================
+
+        // 1. Setup modal saat tombol edit diklik
+        const editNoteModal = document.getElementById('editNoteModal');
+        const editNoteForm = document.getElementById('editNoteForm');
+        const editNoteTextarea = document.getElementById('edit_note');
+
+        // Asumsi rute untuk update history adalah 'admin.complaint.history.update'
+        // Pastikan Anda telah mendefinisikan rute ini di web.php
+        const updateHistoryRoute = "{{ route('admin.complaint.history.update', ['id' => ':id']) }}";
+
+        editNoteModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget; // Tombol Edit yang diklik
+            const historyId = button.getAttribute('data-id');
+            // Menggunakan data-note. Mengganti null/undefined menjadi string kosong
+            const currentNote = button.getAttribute('data-note') || '';
+
+            // Isi textarea dan atur action form
+            editNoteTextarea.value = currentNote;
+
+            // Atur action form menggunakan ID yang diambil
+            editNoteForm.setAttribute('action', updateHistoryRoute.replace(':id', historyId));
+        });
+
+        // 2. Kirim update catatan via AJAX
+        editNoteForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const formData = new FormData(form);
+            const actionUrl = form.getAttribute('action');
+
+            // Tambahkan _method=PUT karena form menggunakan method POST
+            formData.append('_method', 'PUT');
+
+            fetch(actionUrl, {
+                    method: 'POST', // Menggunakan POST karena _method=PUT di body
+                    body: formData,
+                    headers: {
+                        // KOREKSI: Mengganti 'csrf-csrf-token' menjadi 'csrf-token'
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                            'content')
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errorData => {
+                            throw new Error(errorData.message || 'Gagal terhubung ke server.');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            window.location.reload(); // Reload halaman untuk melihat perubahan
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            text: data.message || 'Terjadi kesalahan saat menyimpan catatan.'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Koneksi ke server gagal atau terjadi kesalahan pada server: ' + error
+                            .message,
                     });
                 });
         });
